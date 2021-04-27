@@ -1,0 +1,99 @@
+Integrity constraints must be storable in the system catalog. 
+
+Aggregate Functions : 
+______________________
+
+1) sum() : Used to perform sum operation on the specified field. 
+
+select sum(sal) from Emp;
+
+2) avg() : used to perform avg. operation on the specified field 
+
+select avg(sal) from Emp;
+
+3) max() : Displays max value on the specified record field. 
+
+select max(sal) from Emp;
+
+4) min() : Displays min value on the specified record field. 
+
+select min(sal) from Emp;
+
+5) count(*) : Displays total no.of records of the given table. 
+
+select count(*) from Emp;
+
+select count(comm) from Emp;
+
+select count(mgr) from emp;
+
+group by : Used to generate the summarized reports. 
+
+select job,count(*) from Emp
+group by job;
+
+select job,sum(sal) from Emp
+group by job;
+
+select job,max(sal) from Emp
+group by job;
+
+select job,min(sal) from Emp
+group by job;
+
+select job,avg(sal) from emp
+group by job;
+
+select job,sum(sal),avg(sal),count(*),max(sal),min(sal)
+from Emp group by job
+having count(*) > 1;
+
+select job,sum(sal),avg(sal),count(*),max(sal),min(sal)
+from Emp group by job
+having sum(sal) > 5000;
+
+nvl() : 
+
+select empno,ename,sal,nvl(comm,0) from Emp;
+
+select empno,ename,sal,nvl(comm,0),
+nvl2(comm,sal+comm,sal) from emp;
+
+
+select mgr,nvl(to_char(mgr),'No Manager')
+from Emp;
+
+select comm,nvl(to_char(comm),'No Commission')
+from Emp;
+
+123
+'123'
+
+select ename,sal,
+nvl(to_char(comm),'No Commission'),
+nvl2(to_char(comm),'Both','Only sal')
+from emp;
+
+select length(job),length(ename),
+nullif(length(job),length(ename))
+from emp;
+
+select Sal,comm,mgr,coalesce(mgr,comm,10) from Emp;
+
+select sal,comm,mgr,coalesce(comm,mgr,10) from emp;
+
+select empno,ename,sal,job,
+decode(job,'CLERK',sal+500,
+           'MANAGER',sal+1000,
+           'SALESMAN',sal+800,
+           'ANALYST',sal+600,
+	   SAL) "Rev Sal"
+from Emp
+order by job;
+
+Display headname as if job is 'CLERK' then display 'Bhargav'
+                    if job is 'MANAGER' then display 'Harsha'
+	            if job is 'ANALYST' then display 'Mounika'
+                     else display 'Sravani'
+
+

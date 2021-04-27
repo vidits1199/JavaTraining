@@ -1,0 +1,165 @@
+The row in a table is called tuple and the column is called an attribute. Every column in the table must have a unique name, the no.of tuples is called the cardinality of the table, and the no.of attributes is called the degree of the table. 
+
+The relational model is based on the principle of relational algebra. 
+
+It is a collection of operators that operate on relationships. 
+
+
+1) Display list of tables available in the current database 
+
+select * from tab;
+
+2) Display information about Emp table 
+
+desc Emp 
+
+3) Display the instance name of oracle 
+
+select * from global_name;
+
+4) Display all records from Emp table 
+
+select * from emp;
+
+5) Display Empno, Ename, Sal from Emp table 
+
+select Empno,Ename,Sal from Emp;
+
+6) select Empno,Job,MgrNo,Comm from Emp table
+
+7) select Deptno,Loc from Dept table 
+
+Where Clause : Used to display only the filtered records (Conditional based records) 
+
+8) Display all records whose Sal >= 3000
+
+select * from Emp
+where Sal >= 3000;
+
+select Empno,Ename,Sal from Emp
+Where Sal < 3000;
+
+
+select Empno "Employ No", Ename "Employ Name", Sal "Salary" from Emp
+where Sal < 3000;
+
+9) Display all records whose Job is 'CLERK' 
+
+select * from Emp 
+where job='CLERK';
+
+
+10) Display information whose ENAME is 'SCOTT' 
+
+11) Between...And : used to display info from start to end range 
+
+select * from Emp 
+WHERE Sal BETWEEN 3000 AND 5000;
+
+12) Display all records whose MGR is NULL 
+
+select * from Emp where MGR IS NULL;
+
+13) Display all records whose COMM is NULL
+
+In clause : Used to display only the specific record values.
+
+select * from Emp 
+where job IN('CLERK','MANAGER');
+
+select * from Emp
+where SAL IN(3000,5000);
+
+select * from Emp
+where ENAME IN('SCOTT','FORD','ADAMS');
+
+select * from EMP
+where COMM IN(300);
+
+
+like operator : Used to display data w.r.t. Wild cards 
+
+select * from Emp
+where Ename like 'S%';
+
+-- Displays all records whose name starts with 'S'
+
+select * from Emp 
+where ENAME like '%T';
+
+-- display all records whose name ends with 'T'
+
+ORDER BY : Used to display data on specific field(s) in ascending or descending order. 
+
+select Empno,Ename,SAL,JOB from Emp 
+order By Ename desc;
+
+
+select Empno,Ename,SAL,JOB from Emp 
+order By JOB;
+
+
+select Empno,Ename,SAL,JOB from Emp 
+order By JOB,Ename;
+
+select Empno,Ename,SAL,JOB from Emp 
+order By JOB desc,Ename;
+
+distinct : Used to eliminate duplicate entries at the time of display. 
+
+select distinct job from emp;
+
+row_number() : Used to generate row_number() on the field specified. Field to be specified in over clause. 
+
+select empno,ename,job,sal,
+ROW_NUMBER() OVER(Order By Job) "Rno"
+from Emp;
+
+Rank() : Used to generate rank no on the field specified. 
+
+select empno,ename,job,sal,
+Rank() OVER(Order By Job) "Rno"
+from Emp;
+
+dense_rank() :Used to generate seq. rank no. 
+
+select empno,ename,job,sal,
+dense_rank() OVER(Order By Job) "Rno"
+from Emp;
+
+select empno,ename,job,sal,
+ROW_NUMBER() OVER(partition by job Order By Job) "Rno"
+from Emp;
+
+CASE  
+
+select deptno from Emp;
+
+select empno,ename,job,deptno,
+CASE Deptno
+   WHEN 10 THEN 'Oracle'
+   WHEN 20 THEN 'Java'
+   WHEN 30 THEN 'Dotnet'
+END "DeptName" from emp;
+
+select Empno,Ename,job,Sal,
+CASE job
+   WHEN 'CLERK' THEN SAL+500
+   WHEN 'SALESMAN' THEN SAL+600 
+   WHEN 'PRESIDENT' THEN SAL+1000 
+   WHEN 'MANAGER' THEN SAL+700
+   ELSE SAL+800 
+END "Incr Sal"
+FROM Emp;
+
+
+select Empno,Ename,SAL,
+CASE 
+WHEN COMM IS NULL THEN 0
+ELSE COMM 
+END "Comm",
+CASE 
+  WHEN COMM IS NULL THEN SAL
+  ELSE SAL+COMM 
+END "Total"
+from Emp;
